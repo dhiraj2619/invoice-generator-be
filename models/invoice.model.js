@@ -15,7 +15,7 @@ const invoiceDetailSchema = new schema({
     },
     invoiceDetails: {
         type: String,
-        required: true
+        required: false
     },
     reverseCharge: {
         type: Boolean,
