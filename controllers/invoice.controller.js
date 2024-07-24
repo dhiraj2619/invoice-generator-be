@@ -1,6 +1,19 @@
 const upload = require("../config/multer.config");
 const Invoice = require("../models/invoice.model")
 
+
+async function generateInvoiceNumber(){
+    const prefixInvoice = "IN-";
+    const randomNumber = Math.floor(Math.random() * 1000);
+    const invoiceNo = `${prefixInvoice}${randomNumber}`;
+
+    const existingInvoiceNumber = await Invoice.findOne({invoiceNo});
+
+    if(existingInvoiceNumber){
+          return generateInvoiceNumber();
+    }
+    return invoiceNo;
+}
 const InvoiceController = {
     addInvoice: async (req, res) => {
         upload.single('companylogo')(req,res,async(err)=>{
@@ -12,8 +25,9 @@ const InvoiceController = {
             }
 
             const companylogo = req.file.path;
+            const invoiceNo = await generateInvoiceNumber();
             try {
-                const newInvoice = new Invoice({...req.body,companylogo});
+                const newInvoice = new Invoice({...req.body,companylogo,invoiceNo});
                 const savedInvoice = await newInvoice.save();
                 return res.status(201).json({ message: "invoice saved successfully", savedInvoice })
             } catch (error) {
