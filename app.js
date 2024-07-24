@@ -6,7 +6,7 @@ const { invoiceRouter } = require('./routes/invoice.route');
 const { sellerRouter } = require('./routes/seller.route');
 const app = express();
 const port = process.env.PORT || 5000;
-
+const cors = require('cors');
 const connectToDb = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI);
@@ -17,6 +17,7 @@ const connectToDb = async () => {
 };
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/', (req, res) => {
     res.send('<center><h1>Welcome to Invoice Generator</h1></center>');
