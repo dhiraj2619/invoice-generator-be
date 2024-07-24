@@ -30,6 +30,10 @@ const invoiceFullSchema = new schema({
         ref:'Seller',
         required:true
     },
+    companylogo:{
+       type:String,
+       required:true
+    },
     billingDetails: {
         type: addressSchema,
         required: true

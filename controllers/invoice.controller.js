@@ -1,14 +1,26 @@
+const upload = require("../config/multer.config");
 const Invoice = require("../models/invoice.model")
 
 const InvoiceController = {
     addInvoice: async (req, res) => {
-        try {
-            const newInvoice = new Invoice(req.body);
-            const savedInvoice = await newInvoice.save();
-            return res.status(201).json({ message: "invoice saved successfully", savedInvoice })
-        } catch (error) {
-            res.status(400).json({ message: error.message });
-        }
+        upload.single('companylogo')(req,res,async(err)=>{
+            if (err) {
+                return res.status(400).json({ message: err.message });
+            }
+            if (!req.file) {
+                return res.status(400).json({ message: 'No file uploaded' });
+            }
+
+            const companylogo = req.file.path;
+            try {
+                const newInvoice = new Invoice({...req.body,companylogo});
+                const savedInvoice = await newInvoice.save();
+                return res.status(201).json({ message: "invoice saved successfully", savedInvoice })
+            } catch (error) {
+                res.status(400).json({ message: error.message });
+            }
+        })
+      
     },
     getAllinvoices: async (req, res) => {
         try {
