@@ -17,18 +17,20 @@ const connectToDb = async () => {
 };
 
 app.use(express.json());
-app.use(cors());
 
 const corsOptions = {
     origin: 'http://localhost:3000',
     optionsSuccessStatus: 200
 };
 
+app.use(cors(corsOptions));
+
+
 app.get('/', (req, res) => {
     res.send('<center><h1>Welcome to Invoice Generator</h1></center>');
 });
 
-app.use('/api/invoice',cors(corsOptions),invoiceRouter);
+app.use('/api/invoice',invoiceRouter);
 app.use('/api/seller',sellerRouter);
 
 app.listen(port,()=>{
