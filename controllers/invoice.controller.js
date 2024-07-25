@@ -17,6 +17,7 @@ async function generateInvoiceNumber() {
 const InvoiceController = {
     addInvoice: async (req, res) => {
         upload.single('companylogo')(req, res, async (err) => {
+            res.setHeader('Access-Control-Allow-Origin', '*'); 
             if (err) {
                 return res.status(400).json({ message: err.message });
             }
@@ -46,6 +47,7 @@ const InvoiceController = {
 
     },
     getAllinvoices: async (req, res) => {
+        res.setHeader('Access-Control-Allow-Origin', '*'); 
         try {
             const invoices = await Invoice.find().populate('seller');
             res.status(200).json(invoices);
@@ -54,6 +56,7 @@ const InvoiceController = {
         }
     },
     getInvoiceById: async (req, res) => {
+        res.setHeader('Access-Control-Allow-Origin', '*'); 
         try {
             const invoice = await Invoice.findById(req.params.id).populate('seller');
 
@@ -66,6 +69,7 @@ const InvoiceController = {
         }
     },
     updateInvoice: async (req, res) => {
+        res.setHeader('Access-Control-Allow-Origin', '*'); 
         try {
             const updatedInvoice = await Invoice.findByIdAndUpdate(req.params.id, req.body, { new: true });
             if (!updatedInvoice) {
@@ -77,6 +81,7 @@ const InvoiceController = {
         }
     },
     deleteInvoice: async (req, res) => {
+        res.setHeader('Access-Control-Allow-Origin', '*'); 
         try {
             const deletedInvoice = await Invoice.findByIdAndDelete(req.params.id);
             if (!deletedInvoice) {
