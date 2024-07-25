@@ -19,7 +19,7 @@ const invoiceDetailSchema = new schema({
     },
     reverseCharge: {
         type: String,
-        required: true,
+        required: false,
     }
 });
 
@@ -31,15 +31,15 @@ const invoiceFullSchema = new schema({
     },
     companylogo:{
        type:String,
-       required:true
+       required:false
     },
     billingDetails: {
         type: addressSchema,
-        required: true
+        required: false
     },
     shippingDetails: {
         type: addressSchema,
-        required: true
+        required: false
     },
     placeOfDelivery: {
         type: String,
@@ -47,11 +47,11 @@ const invoiceFullSchema = new schema({
     },
     orderDetails: {
         type: orderSchema,
-        required: true
+        required: false
     },
     invoiceDetails: {
         type: invoiceDetailSchema,
-        required: true
+        required: false
     },
     items: {
         type: [itemSchema],
