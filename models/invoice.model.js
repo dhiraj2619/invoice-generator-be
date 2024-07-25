@@ -27,7 +27,7 @@ const invoiceFullSchema = new schema({
     seller:{
         type:schema.Types.ObjectId,
         ref:'Seller',
-        required:true
+        required:false
     },
     companylogo:{
        type:String,
