@@ -26,12 +26,8 @@ const InvoiceController = {
 
             const companylogo = req.file.path;
             const invoiceNo = await generateInvoiceNumber();
-            const today = new Date();
-            const day = String(today.getDate()).padStart(2, '0');
-            const month = String(today.getMonth() + 1).padStart(2, '0');
-            const year = today.getFullYear();
-            const invoiceDate = `${day}-${month}-${year}`;
-
+            const invoiceDate = new Date();
+           
             try {
                 const newInvoice = new Invoice({
                     ...req.body, companylogo,
