@@ -24,27 +24,38 @@ const InvoiceController = {
             if (!req.file) {
                 return res.status(400).json({ message: 'No file uploaded' });
             }
-
+    
             const companylogo = req.file.path;
             const invoiceNo = await generateInvoiceNumber();
-            const items = JSON.parse(req.body.items || '[]');
             const invoiceDate = new Date();
-           
+    
             try {
+                let items = [];
+                if (req.body.items) {
+                    try {
+                        items = JSON.parse(req.body.items);
+                    } catch (jsonError) {
+                        return res.status(400).json({ message: 'Invalid items format' });
+                    }
+                }
+    
                 const newInvoice = new Invoice({
-                    ...req.body, companylogo,items,
+                    ...req.body,
+                    items,
+                    companylogo,
                     invoiceDetails: {
                         ...req.body.invoiceDetails,
                         invoiceNo,
                         invoiceDate
                     }
                 });
+    
                 const savedInvoice = await newInvoice.save();
-                return res.status(201).json({ message: "invoice saved successfully", savedInvoice })
+                return res.status(201).json({ message: "Invoice saved successfully", savedInvoice });
             } catch (error) {
                 res.status(400).json({ message: error.message });
             }
-        })
+        });
 
     },
     getAllinvoices: async (req, res) => {
