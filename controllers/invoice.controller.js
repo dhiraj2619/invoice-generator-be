@@ -27,11 +27,12 @@ const InvoiceController = {
 
             const companylogo = req.file.path;
             const invoiceNo = await generateInvoiceNumber();
+            const items = JSON.parse(req.body.items);
             const invoiceDate = new Date();
            
             try {
                 const newInvoice = new Invoice({
-                    ...req.body, companylogo,
+                    ...req.body, companylogo,items,
                     invoiceDetails: {
                         ...req.body.invoiceDetails,
                         invoiceNo,
