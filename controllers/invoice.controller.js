@@ -1,5 +1,6 @@
 const upload = require("../config/multer.config");
-const Invoice = require("../models/invoice.model");
+const Invoice = require("../models/invoice.model")
+
 
 async function generateInvoiceNumber() {
     const prefixInvoice = "IN-";
@@ -13,7 +14,6 @@ async function generateInvoiceNumber() {
     }
     return invoiceNo;
 }
-
 const InvoiceController = {
     addInvoice: async (req, res) => {
         upload.single('companylogo')(req, res, async (err) => {
@@ -57,8 +57,7 @@ const InvoiceController = {
             }
         });
     },
-
-    getAllInvoices: async (req, res) => {
+    getAllinvoices: async (req, res) => {
         res.setHeader('Access-Control-Allow-Origin', '*'); 
         try {
             const invoices = await Invoice.find().populate('seller');
@@ -67,21 +66,19 @@ const InvoiceController = {
             res.status(500).json({ message: error.message });
         }
     },
-
     getInvoiceById: async (req, res) => {
         res.setHeader('Access-Control-Allow-Origin', '*'); 
         try {
             const invoice = await Invoice.findById(req.params.id).populate('seller');
 
             if (!invoice) {
-                return res.status(404).json({ message: "Invoice not found" });
+                return res.status(400).json({ message: "invoice not found" })
             }
             res.status(200).json(invoice);
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
     },
-
     updateInvoice: async (req, res) => {
         res.setHeader('Access-Control-Allow-Origin', '*'); 
         try {
@@ -89,12 +86,11 @@ const InvoiceController = {
             if (!updatedInvoice) {
                 return res.status(404).json({ message: 'Invoice not found' });
             }
-            return res.status(200).json({ message: "Invoice updated successfully", updatedInvoice });
+            return res.status(200).json({ message: "invoice updated successfully", updatedInvoice });
         } catch (error) {
             res.status(400).json({ message: error.message });
         }
     },
-
     deleteInvoice: async (req, res) => {
         res.setHeader('Access-Control-Allow-Origin', '*'); 
         try {
@@ -109,4 +105,4 @@ const InvoiceController = {
     }
 }
 
-module.exports = InvoiceController;
+module.exports = InvoiceController
