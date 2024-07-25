@@ -26,7 +26,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
+app.use('/uploads',express.static('uploads'));
 
 app.get('/', (req, res) => {
     res.send('<center><h1>Welcome to Invoice Generator</h1></center>');
