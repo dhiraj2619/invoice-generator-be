@@ -60,7 +60,7 @@ const InvoiceController = {
     getAllinvoices: async (req, res) => {
         res.setHeader('Access-Control-Allow-Origin', '*'); 
         try {
-            const invoices = await Invoice.find().populate('seller');
+            const invoices = await Invoice.find().populate('seller','sellerName').exec();
             res.status(200).json(invoices);
         } catch (error) {
             res.status(500).json({ message: error.message });
