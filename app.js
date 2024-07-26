@@ -19,7 +19,7 @@ const connectToDb = async () => {
 app.use(express.json());
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000','https://invoicegenerator-5vvl.onrender.com'],
     credentials:true,
     optionsSuccessStatus: 200,
     
